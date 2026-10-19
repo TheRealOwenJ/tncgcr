@@ -1,6 +1,7 @@
 import { createInterface } from "node:readline";
 import { send, get } from "./sendandreceive.js";
 import * as banner from "./banner.js";
+import createPlayer from "play-sound";
 
 const settingzFile = Bun.file("./settingz.json");
 let settingz = await settingzFile.json();
@@ -10,6 +11,44 @@ const readline = createInterface({
   input: process.stdin,
   output: process.stdout,
 });
+
+const sound = createPlayer({
+  players: [
+    "mpv",
+    "mplayer",
+    "afplay",
+    "mpg123",
+    "mpg321",
+    "play",
+    "cvlc",
+    "powershell",
+  ],
+});
+
+const colors = {
+  reset: "\x1b[0m",
+  red: "\x1b[31m",
+  orange: "\x1b[38;5;208m",
+  green: "\x1b[32m",
+  gray: "\x1b[90m",
+  purple: "\x1b[35m",
+};
+
+const messages = [
+  "for another poor soul has entered the spookynet...",
+  "do not look behind your terminal...",
+  "something is listening and it isnt an http server...",
+  "the spirits of the dead chatters have been DYING to talk to someone...",
+  "prepare for utter chaos...",
+];
+
+function intro() {
+  printcolor("orange", messages[Math.floor(Math.random() * messages.length)]);
+}
+
+function printcolor(color, msg) {
+  console.log(colors[color] + msg + colors["reset"]);
+}
 
 readline.on("SIGINT", () => {
   console.log("\n\ngoodbye!\n");
@@ -34,8 +73,11 @@ async function refresh(prompt = true) {
   try {
     response = await get();
   } catch {
-    console.error("\n\x1b[31mcan't connect to the server!\x1b[0m");
-    console.log("check your connection or change the server in settingz.json");
+    console.error("\n\x1b[31mcan't connect to the spookynet!\x1b[0m");
+    console.log(
+      "check your connection or try changing the server in settingz.json!",
+    );
+    printcolor("red", "or maybe don't try chatting with demons at 3am ;]");
     return;
   }
 
@@ -65,10 +107,25 @@ async function refresh(prompt = true) {
     }
   });
 
-  if (newMessages && prompt)
+  if (newMessages && prompt) {
     process.stdout.write(
       `${{ r: "\x1b[31m", g: "\x1b[32m", b: "\x1b[34m" }[settingz.username.match(/!(.*?)!/)?.[1]] || ""}@${settingz.username.replace(/!.*?!/g, "")}> \x1b[0m`,
     );
+  }
+
+  if (
+    newMessages &&
+    Object.keys(response).some(
+      (key) =>
+        key > settingz.lastseen && response[key].user !== settingz.username,
+    )
+  ) {
+    sound.play("./notif.mp3", (err) => {
+      if (err) {
+        printcolor("gray", "the spirits are silent...");
+      }
+    });
+  }
 
   if (Object.keys(response).length > 0)
     settingz["lastseen"] = Math.max(...Object.keys(response).map(Number));
@@ -79,7 +136,7 @@ banner.printBanner();
 
 if ((await settingz["username"]) === "") {
   console.log(
-    "you haven't set a username yet! (use !r! for red, and the same for green and blue!)",
+    "you haven't named your vessel yet! (use !r! for red, and the same for green and blue!)",
   );
   console.log("for example: !r!coolguy99");
   settingz["username"] = await new Promise((resolve) => {
@@ -91,24 +148,27 @@ if ((await settingz["username"]) === "") {
 
 updatePrompt();
 
-console.log("connecting to the server...");
+console.log("🕯️  connecting to the spookynet...🕯️");
 try {
   await get();
 } catch {
-  console.error("\n\x1b[31mcan't connect to the server!\x1b[0m");
+  console.error("\n\x1b[31mcan't connect to the spookynet!\x1b[0m");
   console.log(
-    "maybe try changing to another server in the settingz.json file?",
+    "maybe try changing to another spookynet in the settingz.json file?",
   );
+  printcolor("red", "or is your client haunted???");
   process.exit(1);
 }
 
-console.log("done!");
-console.log("\ncatching up on messages:");
+console.log("");
+console.log("done!\n");
+intro();
+console.log("\nchecking the tombs for missed messages:");
 await refresh(false);
 
 console.log("done!");
 console.log("");
-console.log("type !help for commands!");
+console.log("type !HELPME for commands!");
 
 readline.prompt();
 
@@ -123,11 +183,12 @@ readline.on("line", async (answer) => {
     console.log(
       "but i think that is what makes it unique: chaos isnt always too bad!",
     );
-  } else if (answer === "!help") {
-    console.log("commands:");
-    console.log("!info; prints backstory");
-    console.log("!whoami; shows info about yourself");
-    console.log("!changeun; change username and/or colortag");
+  } else if (answer === "!HELPME") {
+    printcolor("red", "🎃 === forbidden knowledge === 🎃");
+    printcolor("purple", "!info; uncover the origins of tncgcr");
+    printcolor("purple", "!whoami; discover your vessel");
+    printcolor("purple", "!changeun; change your identity and/or colortag");
+    printcolor("purple", "!clear; banish the terminal contents");
   } else if (answer === "!changeun") {
     console.log("don't forget the color codes! !r!, !g! and !b!");
     settingz["username"] = await new Promise((resolve) => {

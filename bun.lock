@@ -1,0 +1,18 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "dependencies": {
+        "play-sound": "^1.1.6",
+      },
+    },
+  },
+  "packages": {
+    "find-exec": ["find-exec@1.0.3", "", { "dependencies": { "shell-quote": "^1.8.1" } }, "sha512-gnG38zW90mS8hm5smNcrBnakPEt+cGJoiMkJwCU0IYnEb0H2NQk0NIljhNW+48oniCriFek/PH6QXbwsJo/qug=="],
+
+    "play-sound": ["play-sound@1.1.6", "", { "dependencies": { "find-exec": "1.0.3" } }, "sha512-09eO4QiXNFXJffJaOW5P6x6F5RLihpLUkXttvUZeWml0fU6x6Zp7AjG9zaeMpgH2ZNvq4GR1ytB22ddYcqJIZA=="],
+
+    "shell-quote": ["shell-quote@1.12.0", "", {}, "sha512-PcByqNyT/38F2kDNi006HAMRJaULuBzq/FOsw3qdZvX/GA9W/jamDaRskgHjubHiftXK5sIFxLNkvrXUwcof6Q=="],
+  }
+}

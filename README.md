@@ -1,21 +1,41 @@
 # tncgcr - totally not chaotic global chat room
 
-${\color{red}\textsf{tncgcr}}$ is a global chatroom built in javascript using the bun and nodejs api.
+${\color{red}\textsf{tncgcr}}$ is a spooky global chatroom built in javascript using the bun and nodejs api.
 
-![Logo](https://i.ibb.co/67423X0F/261018-13h39m56s-screenshot.png)
+![Logo](https://i.ibb.co/dqMhSMJ/261021-18h36m26s-screenshot.png)
 
-what makes it special?  
-the fact that its entirely insecured, unfiltered and uncontrolled;  
-i think that this shows that chaos doesn't necessarily have to be bad, _because it can be fun too!_
+### why tho?
 
-it is currently hosted at https://tncgcr-server.onrender.com, my own render instance.  
-it is easy to host your own instance: clone the server repo (https://github.com/TheRealOwenJ/tncgcr), and follow the instructions in the readme!
+the fact that its entirely insecured, unfiltered and uncontrolled makes it special;  
+i think that this shows that chaos doesn't necessarily have to be bad, _because it can be fun too!_  
+just keep in mind that everything you send is publicly available for other users and the instance owner (so maybe keep your darkest secrets to yourself.)
 
-change the rate at which the client fetches for new messages in settingz.json (refreshrate)  
-you can also change the endpoint for a custom server in settingz.json!
+### feachers:
 
-(you can't run this with nodejs if that wasn't already clear, you need to use [bun](https://bun.sh))
+a FUNCTIONABLE global chat,  
+configurable rate to fetch for new messages,  
+custom server support,  
+working message history (totally not the inspiration for the insecure logic)
 
-made for hack club 3am! :]
+some things may change over time, but these are guaranteed. (please note that the source code changes itself every 3am, but that isnt in our control.)
 
-(sorry for the parentheses overload i just want to say if inappropiate things happen ill jump in and reset the message history BUT only if you're using my hosted render instance)
+### installation (summoning):
+
+download the latest release (https://github.com/TheRealOwenJ/tncgcr/releases),  
+run the executable,  
+done!
+
+(if something doesnt work, blame it on the code, not a haunted executable)
+
+### configuring:
+
+all configuration is done in 'settingz.json', this is what can be configured:  
+endpoint: the homeserver; where your unholy messages get sent to and you get your messages from.  
+refreshrate: the rate at which the client fetches for messages, defaults to 5.
+
+### servers and hosting:
+
+there is currently no hosted instance. this will change later though!  
+it is also easy to host your own instance: clone the server repo (https://github.com/TheRealOwenJ/tncgcr), and follow the instructions in the readme!
+
+made for hack club 3am! (hence the spooky theme) :]

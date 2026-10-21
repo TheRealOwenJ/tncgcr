@@ -15,7 +15,8 @@ just keep in mind that everything you send is publicly available for other users
 a FUNCTIONABLE global chat,  
 configurable rate to fetch for new messages,  
 custom server support,  
-working message history (totally not the inspiration for the insecure logic)
+working message history (totally not the inspiration for the insecure logic),  
+notification sound (spookeh)
 
 some things may change over time, but these are guaranteed. (please note that the source code changes itself every 3am, but that isnt in our control.)
 

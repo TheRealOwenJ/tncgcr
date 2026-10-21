@@ -85,7 +85,9 @@ async function refresh(prompt = true) {
     if (key > settingz["lastseen"]) {
       newMessages = true;
       if (first) {
-        process.stdout.clearLine(0);
+        if (process.stdout.isTTY) {
+          process.stdout.clearLine(0);
+        }
         first = false;
       }
 
@@ -161,12 +163,12 @@ try {
 }
 
 console.log("");
-console.log("done!\n");
+console.log("finished.\n");
 intro();
 console.log("\nchecking the tombs for missed messages:");
 await refresh(false);
 
-console.log("done!");
+console.log("finished.");
 console.log("");
 console.log("type !HELPME for commands!");
 
